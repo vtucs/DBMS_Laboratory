@@ -1,4 +1,4 @@
--- 1. List all the student details studying in fourth semester ‘C’ section.
+﻿-- 1. List all the student details studying in fourth semester ‘C’ section.
 
 SELECT S.*, SS.SSID FROM STUDENT S,
     SEMSEC SS, CLASS C
@@ -22,6 +22,7 @@ CREATE VIEW REPORT_CARD AS
     SELECT TEST1, SUBCODE
     FROM IAMARKS
     WHERE USN = '1RN13CS091';
+SELECT * FROM REPORT_CARD;
 
 
 -- 4. Calculate the FinalIA (average of best two test marks)
@@ -73,9 +74,7 @@ SELECT S.*, (CASE
     WHEN IA.FINALIA BETWEEN 12 AND 16 THEN 'AVERAGE'
     ELSE 'WEAK'
     END) AS CAT
-    FROM STUDENT S, IAMARKS IA, SEMSEC SS, CLASS C
-    WHERE S.USN = C.USN AND
-    C.SSID = SS.SSID AND
-    IA.USN = S.USN AND
+    FROM STUDENT S, IAMARKS IA, SEMSEC SS
+    WHERE IA.USN = S.USN AND
     IA.SSID = SS.SSID AND
     SS.SEM = 8;

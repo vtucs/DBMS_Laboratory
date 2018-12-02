@@ -1,4 +1,4 @@
--- 1. Make a list of all project numbers for projects that involve 
+﻿-- 1. Make a list of all project numbers for projects that involve 
 -- an employee whose last name is ‘Scott’,
 -- either as a worker or as a manager of the department that controls the project.
 
@@ -38,8 +38,8 @@ SELECT SUM(SALARY), MAX(SALARY), MIN(SALARY), AVG(SALARY)
 
 SELECT E.FNAME, E.LNAME FROM EMPLOYEE E
     WHERE NOT EXISTS (
-    SELECT PNO FROM PROJECT P, DEPARTMENT D
-    WHERE P.DNO = D.DNO AND D.DNO = 5
+    SELECT PNO FROM PROJECT P
+    WHERE DNO = 5
     MINUS
     SELECT PNO FROM WORKS_ON WO
     WHERE WO.SSN = E.SSN);

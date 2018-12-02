@@ -1,4 +1,4 @@
--- 1. Count the customers with grades above Bangalore’s average.
+﻿-- 1. Count the customers with grades above Bangalore’s average.
 
 SELECT GRADE, COUNT(GRADE) FROM CUSTOMER
     GROUP BY GRADE
@@ -9,11 +9,10 @@ SELECT GRADE, COUNT(GRADE) FROM CUSTOMER
 
 -- 2. Find the name and numbers of all salesmen who had more than one customer.
 
-SELECT S.SALESMAN_ID, NAME
-    FROM SALESMAN S, CUSTOMER C
-    WHERE S.SALESMAN_ID = C.SALESMAN_ID
-    GROUP BY (S.SALESMAN_ID, NAME)
-    HAVING COUNT(*) > 1;
+SELECT S.SALESMAN_ID, NAME FROM SALESMAN S
+    WHERE SALESMAN_ID IN (SELECT SALESMAN_ID FROM CUSTOMER
+    GROUP BY SALESMAN_ID
+    HAVING COUNT(*) > 1);
 -- or --
 SELECT S.SALESMAN_ID, NAME
     FROM SALESMAN S
@@ -24,13 +23,14 @@ SELECT S.SALESMAN_ID, NAME
 -- 3. List all salesmen and indicate those who have 
 -- and don’t have customers in their cities (Use UNION operation.)
 
-SELECT S.SALESMAN_ID, S.NAME, C.CUST_NAME
+SELECT S.SALESMAN_ID, NAME, CUST_NAME
     FROM SALESMAN S, CUSTOMER C
-    WHERE S.CITY = C.CITY
+    WHERE S.SALESMAN_ID = C.SALESMAN_ID
+    AND S.CITY = C.CITY
     UNION
-    SELECT S.SALESMAN_ID, S.NAME, 'NO MATCH'
-    FROM SALESMAN S
-    WHERE S.CITY NOT IN (SELECT CITY FROM CUSTOMER);
+    SELECT S1.SALESMAN_ID, NAME, 'NO_MATCH'
+    FROM SALESMAN S1
+    WHERE S1.CITY NOT IN (SELECT CITY FROM CUSTOMER WHERE S1.SALESMAN_ID = SALESMAN_ID);
 
 
 -- 4. Create a view that finds the salesman

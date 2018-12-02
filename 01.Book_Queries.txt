@@ -1,4 +1,4 @@
--- 1. Retrieve details of all books in the library – id, title, name of publisher,
+﻿-- 1. Retrieve details of all books in the library – id, title, name of publisher,
 -- authors, number of copies in each branch, etc.
 
 SELECT B.BOOK_ID, TITLE, PUBLISHER_NAME, AUTHOR_NAME, NO_OF_COPIES, LB.BRANCH_ID
@@ -26,7 +26,8 @@ DELETE FROM BOOK WHERE BOOK_ID = 3;
 -- 4. Partition the BOOK table based on year of publication.
 -- Demonstrate its working with a simple query.
 
-CREATE VIEW V_PUB AS SELECT PUB_YEAR FROM BOOK;
+CREATE VIEW V_PUB AS SELECT PUB_YEAR FROM BOOK ORDER BY PUB_YEAR;
+SELECT * FROM V_PUB;
 
 
 -- 5. Create a view of all books and its number of copies
@@ -36,3 +37,4 @@ CREATE VIEW CUR_BOOKS AS
     SELECT B.BOOK_ID, TITLE, NO_OF_COPIES
     FROM BOOK B, BOOK_COPIES BC
     WHERE B.BOOK_ID = BC.BOOK_ID;
+SELECT * FROM CUR_BOOKS;
